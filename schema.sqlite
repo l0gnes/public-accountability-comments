@@ -1,0 +1,15 @@
+CREATE TABLE IF NOT EXISTS comments (
+    id TEXT PRIMARY KEY,
+    author_name TEXT,
+    author_avatar TEXT,
+    author_url TEXT,
+    author_id TEXT,
+    channel_id TEXT,
+    video_id TEXT,
+    content TEXT,
+    parent TEXT,
+    can_like INTEGER,
+    like_count INTEGER,
+    publish_time TEXT,
+    update_time TEXT
+);
