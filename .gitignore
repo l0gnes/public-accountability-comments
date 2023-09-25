@@ -169,6 +169,7 @@ testout.json
 # linecount plugin
 out/
 
-./out.db
+out.db
 status/
 in/*
+/state.json
