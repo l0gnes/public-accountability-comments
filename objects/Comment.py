@@ -20,6 +20,11 @@ class Comment(object):
     @classmethod
     def construct_from_response(cls, response : dict) -> "Comment":
         
+        # Deleted channels sometimes omit their channel ids.
+        # We can still pull their comment data however.
+        if not response['snippet'].get('authorChannelId', False):
+            response['snippet']['authorChannelId'] = {'value' : ''}
+
         x = cls(
             comment_id = response['id'],
             comment_author_name = response['snippet']['authorDisplayName'],
