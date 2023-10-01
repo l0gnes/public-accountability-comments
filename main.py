@@ -87,6 +87,9 @@ class YoutubeCommentSniffer(object):
                 )
                 c = 0
 
+            # Move this here, Idk why I didn't put it here in the first place
+            self.PERSIST.SAVED_STATE.push_channel(channel)
+
             self.CONSOLE.log(
                 f':bust_in_silhouette: [bold yellow] Attempting to pull videos from channel [green underline]"{channel.channel_handle}"'
             )
@@ -99,6 +102,8 @@ class YoutubeCommentSniffer(object):
                     if not self.PERSIST.satisfies_state_check(video_id=vid):
                         v += 1
                         continue
+
+                    self.PERSIST.SAVED_STATE.push_video_id(vid)
 
                     # If the program gets to this point, then the state resume is completed.
                     self.PERSIST.STATE_RESUME_COMPLETE = True
@@ -141,13 +146,13 @@ class YoutubeCommentSniffer(object):
                             cmt_thrds.next()
                         except HttpError as httpErr:
                             self.error_callback(httpErr, vid, channel.channel_handle)
-                            
 
-                    self.PERSIST.SAVED_STATE.push_video_id(vid)
+                    self.CONSOLE.log(f'[green] Video Id [cyan]{vid}[/cyan] Completed ({index+1}/{channel.video_id_count})')
 
-                    self.CONSOLE.log(f'[green] Video Id [cyan]{vid}[/cyan] Completed ({index}/{channel.video_id_count})')
+                # Resets the video id
+                self.PERSIST.SAVED_STATE.push_video_id('')
 
-            self.PERSIST.SAVED_STATE.push_channel(channel)
+            
 
 
 
